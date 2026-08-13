@@ -1,4 +1,5 @@
-('D:\\VScode_out\\python_out\\progrom\\GENSHIN_web\\GENSHEN_WEB_V2\\build\\原老检测器\\PYZ-00.pyz',
+('D:\\VScode_out\\python_out\\progrom\\GENSHIN_web\\GENSHEN_WEB_20260810 - '
+ '副本\\build\\原老检测器\\PYZ-00.pyz',
  [('__future__', 'D:\\python\\Lib\\__future__.py', 'PYMODULE'),
   ('_aix_support', 'D:\\python\\Lib\\_aix_support.py', 'PYMODULE'),
   ('_compat_pickle', 'D:\\python\\Lib\\_compat_pickle.py', 'PYMODULE'),

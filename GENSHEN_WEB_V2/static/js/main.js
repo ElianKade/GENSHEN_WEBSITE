@@ -10,6 +10,10 @@ function goToTrap() {
     window.location.href = '/trap';
 }
 
+function goToGacha() {
+    window.location.href = '/gacha';
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     var items = document.querySelectorAll('.menu-item.active');
     items.forEach(function(item, index) {

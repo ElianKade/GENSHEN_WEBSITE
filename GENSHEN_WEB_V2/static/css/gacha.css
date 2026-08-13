@@ -1,0 +1,709 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #0b0e1a 0%, #1a1f35 50%, #0b0e1a 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    padding-top: 30px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 30px;
+    max-width: 540px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    position: relative;
+    margin-top: 10px;
+}
+
+/* ===== 返回按钮 - 下移 ===== */
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    z-index: 10;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+/* ===== 资源栏 - 上边距拉大 ===== */
+.resource-bar {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px 0 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.resource-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 3px 10px 3px 6px;
+    border-radius: 20px;
+}
+
+.resource-label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
+}
+
+.resource-value {
+    color: #f6d365;
+    font-size: 16px;
+    font-weight: 700;
+    min-width: 28px;
+    text-align: center;
+}
+
+.resource-item.genesis .resource-value {
+    color: #a78bfa;
+}
+
+.add-btn {
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    color: #f6d365;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.add-btn:hover {
+    background: rgba(255, 215, 0, 0.25);
+}
+
+/* ===== 卡池切换 ===== */
+.banner-tabs {
+    display: flex;
+    gap: 10px;
+    margin: 12px 0;
+}
+
+.banner-tab {
+    flex: 1;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+.banner-tab.active {
+    border-color: #f6d365;
+    color: #f6d365;
+    background: rgba(255, 215, 0, 0.08);
+}
+
+.banner-tab:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ===== 目标设置 ===== */
+.target-section {
+    margin: 10px 0 12px 0;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+}
+
+.target-section label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.target-controls {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.target-controls select {
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    font-family: inherit;
+}
+
+.target-controls select option {
+    background: #1a1f35;
+}
+
+.target-count-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.target-count-wrapper .target-label {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 11px;
+}
+
+.target-count-wrapper select {
+    padding: 6px 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    font-family: inherit;
+}
+
+.target-confirm {
+    padding: 6px 14px;
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    color: #f6d365;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.target-confirm:hover {
+    background: rgba(255, 215, 0, 0.25);
+}
+
+.target-reset {
+    padding: 6px 14px;
+    background: rgba(255, 80, 80, 0.12);
+    border: 1px solid rgba(255, 80, 80, 0.15);
+    border-radius: 8px;
+    color: #f87171;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.target-reset:hover {
+    background: rgba(255, 80, 80, 0.2);
+}
+
+.target-stats {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 11px;
+    margin-left: auto;
+}
+
+/* ===== 抽卡按钮 ===== */
+.gacha-actions {
+    display: flex;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.gacha-btn {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.gacha-btn.single {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.gacha-btn.single:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+}
+
+.gacha-btn.ten {
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    color: #1a1f35;
+}
+
+.gacha-btn.ten:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(246, 211, 101, 0.3);
+}
+
+.gacha-btn.shop {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.6);
+    flex: 0.4;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.gacha-btn.shop:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* ===== 保底显示 ===== */
+.pity-display {
+    display: flex;
+    justify-content: space-around;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+.pity-display span {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 2px 10px;
+    border-radius: 12px;
+}
+
+.pity-display #guaranteeDisplay {
+    color: #f6d365;
+}
+
+/* ===== 结果展示 ===== */
+.result-container {
+    min-height: 120px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.result-item {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    animation: popIn 0.35s ease forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    color: rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 2px rgba(255,255,255,0.2);
+}
+
+.result-item.r5 {
+    background: #f6d365;
+    box-shadow: 0 0 30px rgba(246, 211, 101, 0.25);
+}
+
+.result-item.r5.wrong {
+    background: #f6d365;
+    box-shadow: 0 0 30px rgba(246, 211, 101, 0.25);
+    color: rgba(200, 50, 50, 0.85);
+}
+
+.result-item.r4 {
+    background: #9b59b6;
+    box-shadow: 0 0 20px rgba(155, 89, 182, 0.2);
+}
+
+.result-item.r3 {
+    background: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.1);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    60% { transform: scale(1.08); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===== 统计面板 ===== */
+.stats-display {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stats-display h3 {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.stats-display .stats-banner-name {
+    color: #f6d365;
+}
+
+.stats-display .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+}
+
+.stats-display .stat-item {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 10px;
+}
+
+.stats-display .stat-item .num {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #f6d365;
+    margin-bottom: 1px;
+}
+
+.stats-display .stat-item .num.green {
+    color: #4ade80;
+}
+.stats-display .stat-item .num.red {
+    color: #f87171;
+}
+.stats-display .stat-item .num.purple {
+    color: #a78bfa;
+}
+.stats-display .stat-item .num.blue {
+    color: #60a5fa;
+}
+
+/* ===== 兑换弹窗 ===== */
+.modal-content.exchange {
+    max-width: 380px;
+    text-align: center;
+}
+
+.modal-content.exchange h2 {
+    color: #f6d365;
+}
+
+.modal-content.exchange .exchange-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    margin: 16px 0;
+}
+
+.modal-content.exchange .exchange-label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    width: 100%;
+}
+
+.modal-content.exchange .exchange-label strong {
+    color: #f6d365;
+}
+
+.modal-content.exchange input[type="number"] {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.modal-content.exchange input[type="number"]:focus {
+    outline: none;
+    border-color: #f6d365;
+}
+
+.modal-content.exchange .exchange-btn.max {
+    padding: 10px 16px;
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 10px;
+    color: #f6d365;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.modal-content.exchange .exchange-btn.max:hover {
+    background: rgba(255, 215, 0, 0.2);
+}
+
+.modal-content.exchange .exchange-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.modal-content.exchange .exchange-confirm {
+    padding: 10px 30px;
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    border: none;
+    border-radius: 10px;
+    color: #1a1f35;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.modal-content.exchange .exchange-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(246, 211, 101, 0.25);
+}
+
+.modal-content.exchange .exchange-cancel {
+    padding: 10px 30px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.modal-content.exchange .exchange-cancel:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== 商城弹窗 ===== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(145deg, rgba(25, 30, 50, 0.95), rgba(15, 18, 30, 0.98));
+    border-radius: 24px;
+    padding: 35px 30px 25px;
+    max-width: 420px;
+    width: 92%;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 215, 0, 0.08);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+}
+
+.modal-content h2 {
+    color: #f6d365;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+}
+
+.modal-content .modal-sub {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.shop-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.shop-item {
+    padding: 14px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 13px;
+}
+
+.shop-item .price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f6d365;
+}
+
+.shop-item .crystal {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    display: block;
+    margin-top: 2px;
+}
+
+.shop-item:hover {
+    background: rgba(255, 215, 0, 0.08);
+    border-color: rgba(255, 215, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.shop-close {
+    margin-top: 18px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.shop-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ===== 结算弹窗 ===== */
+.modal-content.summary .summary-title {
+    color: #f6d365;
+    font-size: 22px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.modal-content.summary .summary-sub {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 12px;
+    margin-bottom: 16px;
+}
+
+.modal-content.summary .summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+}
+
+.modal-content.summary .summary-item .value {
+    color: #f6d365;
+    font-weight: 600;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 500px) {
+    .container {
+        padding: 16px;
+    }
+    .back-btn {
+        top: 14px;
+        left: 10px;
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+    .resource-bar {
+        padding: 12px 0 10px 0;
+        margin-top: 8px;
+    }
+    .resource-item {
+        padding: 2px 6px 2px 4px;
+    }
+    .resource-value {
+        font-size: 14px;
+        min-width: 22px;
+    }
+    .gacha-actions {
+        flex-wrap: wrap;
+    }
+    .gacha-btn {
+        flex: 1;
+        min-width: 55px;
+        font-size: 12px;
+        padding: 10px;
+    }
+    .gacha-btn.shop {
+        flex: 1;
+    }
+    .result-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+    }
+    .shop-items {
+        grid-template-columns: 1fr;
+    }
+    .modal-content {
+        padding: 25px 18px 20px;
+    }
+    .target-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .target-stats {
+        margin-left: 0;
+        text-align: center;
+    }
+    .stats-display .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+    }
+    .stats-display .stat-item .num {
+        font-size: 15px;
+    }
+}

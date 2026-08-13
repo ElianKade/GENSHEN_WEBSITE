@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽卡模拟器 - 原老检测器</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gacha.css') }}">
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="goBack()">返回</button>
+
+        <!-- 资源栏 -->
+        <div class="resource-bar">
+            <div class="resource-item genesis">
+                <span class="resource-label">创世结晶</span>
+                <span class="resource-value" id="genesisCount">0</span>
+                <button class="add-btn" onclick="openShop()">+</button>
+            </div>
+            <div class="resource-item">
+                <span class="resource-label">原石</span>
+                <span class="resource-value" id="primogemCount">0</span>
+                <button class="add-btn" onclick="openPrimogemModal()">+</button>
+            </div>
+            <div class="resource-item">
+                <span class="resource-label">纠缠之缘</span>
+                <span class="resource-value" id="fateCount">0</span>
+                <button class="add-btn" onclick="openFateModal()">+</button>
+            </div>
+        </div>
+
+        <!-- 卡池切换 -->
+        <div class="banner-tabs">
+            <button class="banner-tab active" data-banner="character" onclick="switchBanner('character')">角色卡池</button>
+            <button class="banner-tab" data-banner="weapon" onclick="switchBanner('weapon')">武器卡池</button>
+        </div>
+
+        <!-- 目标设置 -->
+        <div class="target-section">
+            <label>抽卡目标</label>
+            <div class="target-controls">
+                <select id="targetTypeSelect" onchange="updateTargetOptions()">
+                    <option value="">未选择</option>
+                    <option value="character">角色</option>
+                    <option value="weapon">武器</option>
+                </select>
+                <div class="target-count-wrapper" id="targetCountWrapper" style="display:none;">
+                    <span class="target-label">目标数量</span>
+                    <select id="targetCountSelect">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                    </select>
+                </div>
+                <button class="target-confirm" id="targetConfirmBtn" onclick="confirmTarget()" style="display:none;">锁定目标</button>
+                <button class="target-reset" onclick="resetStats()">重置统计</button>
+                <span class="target-stats" id="targetProgress">未设定</span>
+            </div>
+        </div>
+
+        <!-- 保底显示 -->
+        <div class="pity-display">
+            <span>五星保底 <span id="fivePity">0</span>/<span id="fivePityMax">90</span></span>
+            <span>四星保底 <span id="fourPity">0</span>/10</span>
+            <span id="guaranteeDisplay">小保底</span>
+        </div>
+
+        <!-- 抽卡按钮 -->
+        <div class="gacha-actions">
+            <button class="gacha-btn single" onclick="doPull(1)">单抽</button>
+            <button class="gacha-btn ten" onclick="doPull(10)">十连</button>
+            <button class="gacha-btn shop" onclick="openShop()">商城</button>
+        </div>
+
+        <!-- 结果展示 -->
+        <div class="result-container" id="resultContainer">
+            <div class="result-grid" id="resultGrid"></div>
+        </div>
+
+        <!-- 统计面板（固定） -->
+        <div class="stats-display" id="statsDisplay">
+            <h3>抽卡统计 <span class="stats-banner-name" id="statsBannerName">角色卡池</span></h3>
+            <div id="statsContent"></div>
+        </div>
+    </div>
+
+    <!-- 商城弹窗 -->
+    <div class="modal" id="shopModal">
+        <div class="modal-content">
+            <h2>✦ 商城</h2>
+            <p class="modal-sub">选择充值档位</p>
+            <div class="shop-items">
+                <div class="shop-item" onclick="recharge(648, 6640)">
+                    <span class="price">648元</span>
+                    <span class="crystal">获得 6640 创世结晶</span>
+                </div>
+                <div class="shop-item" onclick="recharge(328, 3880)">
+                    <span class="price">328元</span>
+                    <span class="crystal">获得 3880 创世结晶</span>
+                </div>
+                <div class="shop-item" onclick="recharge(198, 2240)">
+                    <span class="price">198元</span>
+                    <span class="crystal">获得 2240 创世结晶</span>
+                </div>
+                <div class="shop-item" onclick="recharge(98, 1090)">
+                    <span class="price">98元</span>
+                    <span class="crystal">获得 1090 创世结晶</span>
+                </div>
+                <div class="shop-item" onclick="recharge(30, 330)">
+                    <span class="price">30元</span>
+                    <span class="crystal">获得 330 创世结晶</span>
+                </div>
+                <div class="shop-item" onclick="recharge(6, 60)">
+                    <span class="price">6元</span>
+                    <span class="crystal">获得 60 创世结晶</span>
+                </div>
+            </div>
+            <div class="shop-close" onclick="closeShop()">关闭</div>
+        </div>
+    </div>
+
+    <!-- 原石兑换弹窗 -->
+    <div class="modal" id="primogemModal">
+        <div class="modal-content exchange">
+            <h2>✦ 创世结晶 → 原石</h2>
+            <p class="modal-sub">1:1 兑换</p>
+            <div class="exchange-input">
+                <span class="exchange-label">可兑换：<strong id="maxGenesis">0</strong></span>
+                <input type="number" id="primogemInput" min="1" placeholder="输入数量">
+                <button class="exchange-btn max" onclick="setMaxPrimogem()">最大</button>
+            </div>
+            <div class="exchange-actions">
+                <button class="exchange-confirm" onclick="confirmPrimogem()">确认兑换</button>
+                <button class="exchange-cancel" onclick="closePrimogemModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 纠缠之缘兑换弹窗 -->
+    <div class="modal" id="fateModal">
+        <div class="modal-content exchange">
+            <h2>✦ 原石 → 纠缠之缘</h2>
+            <p class="modal-sub">160 原石 = 1 纠缠之缘</p>
+            <div class="exchange-input">
+                <span class="exchange-label">可兑换：<strong id="maxFate">0</strong></span>
+                <input type="number" id="fateInput" min="1" placeholder="输入数量">
+                <button class="exchange-btn max" onclick="setMaxFate()">最大</button>
+            </div>
+            <div class="exchange-actions">
+                <button class="exchange-confirm" onclick="confirmFate()">确认兑换</button>
+                <button class="exchange-cancel" onclick="closeFateModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结算弹窗 -->
+    <div class="modal" id="summaryModal">
+        <div class="modal-content summary">
+            <div class="summary-title" id="summaryTitle">目标达成！</div>
+            <div class="summary-sub">抽卡结算报告</div>
+            <div id="summaryContent"></div>
+            <div class="shop-close" onclick="closeSummary()">确定</div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/gacha.js') }}"></script>
+</body>
+</html>
