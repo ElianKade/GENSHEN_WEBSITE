@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提瓦特老资历 - 原老检测器</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/calculator.css') }}">
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="goBack()">返回</button>
+
+        <h1>提瓦特老资历</h1>
+        <p class="subtitle">检测你在提瓦特大陆的资历</p>
+
+        <div class="input-group">
+            <label for="birth_date">入坑日期</label>
+            <div class="date-input-wrapper">
+                <input type="text" id="birth_date" placeholder="请输入日期，如 2020-09-28" autocomplete="off">
+                <button class="date-picker-btn" id="datePickerBtn">选择日期</button>
+                <button class="date-picker-btn spin-btn" id="spinBtn">随机滚动</button>
+            </div>
+            <div class="hint" id="hint">可手动输入、选择日期或按住随机滚动</div>
+        </div>
+
+        <button class="calculate-btn" onclick="calculate()">检测</button>
+
+        <div class="loading" id="loading">检测中...</div>
+        <div class="error" id="error"></div>
+
+        <div class="result" id="result">
+            <div class="birth-info" id="birthInfo"></div>
+            <div class="days" id="daysLived">0</div>
+            <div class="label" id="daysLabel">天</div>
+            <div class="level" id="level"></div>
+            <div class="level-extra" id="levelExtra"></div>
+        </div>
+    </div>
+
+    <!-- 隐藏的原生日期选择器 -->
+    <input type="date" id="hiddenDatePicker" style="display: none;">
+
+    <a href="https://ys.mihoyo.com/" target="_blank" class="cloud-btn">
+        ☁️
+        <span class="tooltip">✨</span>
+    </a>
+
+    <script src="{{ url_for('static', filename='js/calculator.js') }}"></script>
+</body>
+</html>

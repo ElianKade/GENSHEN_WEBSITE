@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提瓦特问答 - 原老检测器</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="goBack()">返回</button>
+
+        <h1>提瓦特问答</h1>
+        <p class="subtitle">测试你的原神知识</p>
+
+        <div class="quiz-menu">
+            <div class="quiz-item active" onclick="startQuiz('easy')">
+                <div class="name">简单</div>
+                <div class="desc">每一位旅行者都掌握的常识</div>
+            </div>
+
+            <div class="quiz-item disabled" onclick="startQuiz('hard')">
+                <div class="name">困难</div>
+                <div class="desc">开发中</div>
+            </div>
+
+            <div class="quiz-item active" onclick="startQuiz('extreme')">
+                <div class="name">绝境</div>
+                <div class="desc">只有经历了无数次冒险才铭刻于心的世界之章</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>提瓦特大陆 · 原老检测器</p>
+        </div>
+    </div>
+
+    <a href="https://ys.mihoyo.com/" target="_blank" class="cloud-btn">
+        ☁️
+        <span class="tooltip">✨</span>
+    </a>
+
+    <script>
+        function goBack() {
+            window.location.href = '/';
+        }
+
+        function startQuiz(mode) {
+            if (mode === 'easy') {
+                window.location.href = '/quiz/easy';
+            } else if (mode === 'hard') {
+                alert('困难模式正在开发中，敬请期待！');
+            } else if (mode === 'extreme') {
+                window.location.href = '/quiz/extreme';
+            }
+        }
+    </script>
+</body>
+</html>

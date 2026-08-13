@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原老诱捕器 - 原老检测器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #0b0e1a 0%, #1a1f35 50%, #0b0e1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 60px 40px;
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            position: relative;
+            text-align: center;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            transform: translateX(-2px);
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+
+        .center-message {
+            background: rgba(255, 107, 107, 0.08);
+            border: 2px solid rgba(255, 107, 107, 0.15);
+            border-radius: 16px;
+            padding: 50px 30px;
+            margin: 10px 0 30px 0;
+        }
+
+        .center-message .big-text {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ff6b6b;
+            letter-spacing: 2px;
+        }
+
+        .center-message .sub-text {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 18px;
+            margin-top: 12px;
+        }
+
+        /* ===== 底部金色文字 ===== */
+        .footer-text {
+            color: #f6d365;
+            font-size: 14px;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        .cloud-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(232, 244, 248, 0.2), rgba(184, 216, 232, 0.15));
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            cursor: pointer;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            z-index: 1000;
+            user-select: none;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .cloud-btn:hover {
+            transform: scale(1.15) rotate(-5deg);
+            box-shadow: 0 8px 50px rgba(255, 215, 0, 0.15);
+            background: linear-gradient(135deg, rgba(232, 244, 248, 0.3), rgba(184, 216, 232, 0.25));
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .cloud-btn:active {
+            transform: scale(0.9);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .cloud-btn {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .cloud-btn:hover {
+            animation: none;
+        }
+
+        .cloud-btn .tooltip {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: #f6d365;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 20px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .cloud-btn:hover .tooltip {
+            opacity: 1;
+            bottom: 85px;
+        }
+
+        .cloud-popup {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            background: rgba(255, 215, 0, 0.9);
+            color: #1a1f35;
+            padding: 12px 24px;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            box-shadow: 0 8px 40px rgba(255, 215, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            z-index: 1001;
+            font-family: inherit;
+        }
+
+        .cloud-popup.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .cloud-popup::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 25px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid rgba(255, 215, 0, 0.9);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .back-btn {
+                top: 12px;
+                left: 12px;
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .center-message {
+                padding: 30px 20px;
+            }
+
+            .center-message .big-text {
+                font-size: 26px;
+            }
+
+            .center-message .sub-text {
+                font-size: 15px;
+            }
+
+            .footer-text {
+                font-size: 12px;
+            }
+
+            .cloud-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+                font-size: 32px;
+            }
+
+            .cloud-popup {
+                bottom: 90px;
+                right: 20px;
+                font-size: 15px;
+                padding: 10px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="goBack()">返回</button>
+
+        <div class="center-message">
+            <div class="big-text">你在期待什么？</div>
+            <div class="sub-text">这里什么都没有，退下吧！</div>
+        </div>
+
+        <!-- ===== 底部金色文字 ===== -->
+        <div class="footer-text">
+            欢迎各位旅行者向该站提供宝贵资源
+        </div>
+    </div>
+
+    <a href="https://ys.mihoyo.com/" target="_blank" class="cloud-btn" id="cloudBtn">
+        ☁️
+        <span class="tooltip">✨</span>
+    </a>
+
+    <div class="cloud-popup" id="cloudPopup">欸？云朵！</div>
+
+    <script>
+        function goBack() {
+            window.location.href = '/';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var popup = document.getElementById('cloudPopup');
+            
+            setTimeout(function() {
+                popup.classList.add('show');
+            }, 1000);
+            
+            setTimeout(function() {
+                popup.classList.remove('show');
+            }, 4500);
+            
+            var cloudBtn = document.getElementById('cloudBtn');
+            cloudBtn.addEventListener('mouseenter', function() {
+                popup.classList.add('show');
+            });
+            cloudBtn.addEventListener('mouseleave', function() {
+                popup.classList.remove('show');
+            });
+        });
+    </script>
+</body>
+</html>

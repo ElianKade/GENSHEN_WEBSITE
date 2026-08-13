@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提瓦特问答 - 绝境模式</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+    <style>
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px 0;
+        }
+
+        .question-number {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            color: white;
+            font-size: 19px;
+            font-weight: 500;
+            margin-bottom: 25px;
+            line-height: 1.7;
+            min-height: 60px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 20px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-family: inherit;
+            user-select: none;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(4px);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-btn.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+            color: #2ecc71;
+        }
+
+        .option-btn.wrong {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        .feedback {
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            display: none;
+            margin-bottom: 15px;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+        }
+
+        .feedback.wrong {
+            background: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        .next-btn {
+            display: none;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(238, 90, 36, 0.25);
+        }
+
+        .result-area {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .result-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .result-title.pass {
+            color: #f6d365;
+        }
+
+        .result-title.fail {
+            color: #e74c3c;
+        }
+
+        .result-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .result-btn {
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            margin: 0 8px;
+        }
+
+        .result-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .result-btn.primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+        }
+
+        .result-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(238, 90, 36, 0.25);
+        }
+
+        .result-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .credit-note {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 12px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            letter-spacing: 0.5px;
+        }
+
+        /* 绝境模式特有 - 红色主题边框 */
+        .container.extreme {
+            border-color: rgba(255, 80, 80, 0.15);
+        }
+
+        .container.extreme h1 {
+            color: #ff6b6b;
+        }
+
+        @media (max-width: 480px) {
+            .question-text {
+                font-size: 16px;
+            }
+            .option-btn {
+                font-size: 13px;
+                padding: 12px 16px;
+            }
+            .result-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container extreme">
+        <button class="back-btn" onclick="goHome()">返回</button>
+
+        <h1>提瓦特问答</h1>
+        <p class="subtitle" style="color: rgba(255, 107, 107, 0.6);">绝境模式 · 只有经历了无数次冒险才铭刻于心的世界之章</p>
+
+        <div class="quiz-container" id="question-area">
+            <div class="question-number" id="question-number">1/5</div>
+            <div class="question-text" id="question-text">加载题目中...</div>
+
+            <div class="options-container" id="options-container"></div>
+
+            <div class="feedback" id="feedback"></div>
+            <button class="next-btn" id="next-btn" onclick="nextQuestion()">下一题</button>
+        </div>
+
+        <div class="result-area" id="result-area">
+            <div class="result-title" id="result-title"></div>
+            <div class="result-desc" id="result-desc"></div>
+            <div class="result-buttons">
+                <button class="result-btn primary" onclick="retryQuiz()">再来一次</button>
+                <button class="result-btn" onclick="goHome()">返回首页</button>
+            </div>
+        </div>
+
+        <div class="credit-note">此部分题目出自b站up星月银</div>
+    </div>
+
+    <a href="https://ys.mihoyo.com/" target="_blank" class="cloud-btn">
+        ☁️
+        <span class="tooltip">✨</span>
+    </a>
+
+    <script src="{{ url_for('static', filename='js/quiz_extreme.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQuestions();
+        });
+    </script>
+</body>
+</html>

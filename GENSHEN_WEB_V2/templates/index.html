@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原老检测器</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>原老检测器</h1>
+            <p class="subtitle">检测你的提瓦特资历</p>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-item active" onclick="goToCalculator()">
+                <div class="icon">资</div>
+                <div class="name">提瓦特老资历</div>
+                <div class="desc">检测你的入坑天数</div>
+            </div>
+
+            <div class="menu-item active" onclick="goToQuiz()">
+                <div class="icon">问</div>
+                <div class="name">提瓦特问答</div>
+                <div class="desc">测试你的原神知识</div>
+            </div>
+
+            <div class="menu-item disabled">
+                <div class="icon">更</div>
+                <div class="name">更新中</div>
+                <div class="desc">敬请期待</div>
+            </div>
+
+            <div class="menu-item disabled">
+                <div class="icon">更</div>
+                <div class="name">更新中</div>
+                <div class="desc">敬请期待</div>
+            </div>
+
+            <div class="menu-item disabled">
+                <div class="icon">更</div>
+                <div class="name">更新中</div>
+                <div class="desc">敬请期待</div>
+            </div>
+
+            <!-- 第六个模块：原老诱捕器 -->
+            <div class="menu-item active" onclick="goToTrap()">
+                <div class="icon">诱</div>
+                <div class="name">原老诱捕器</div>
+                <div class="desc">浏览18+大作</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>提瓦特大陆 · 原老检测器</p>
+        </div>
+    </div>
+
+    <a href="https://ys.mihoyo.com/" target="_blank" class="cloud-btn" id="cloudBtn">
+        ☁️
+        <span class="tooltip">✨</span>
+    </a>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

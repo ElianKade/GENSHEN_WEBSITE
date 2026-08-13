@@ -1,0 +1,406 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #0b0e1a 0%, #1a1f35 50%, #0b0e1a 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    position: relative;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    transform: translateX(-2px);
+}
+
+.back-btn:active {
+    transform: scale(0.95);
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    font-size: 28px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.date-input-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.date-input-wrapper input[type="text"] {
+    flex: 1;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 16px;
+    color: white;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    min-width: 150px;
+}
+
+.date-input-wrapper input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.date-input-wrapper input[type="text"]:focus {
+    outline: none;
+    border-color: #f6d365;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 30px rgba(246, 211, 101, 0.05);
+}
+
+.date-picker-btn {
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.date-picker-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 215, 0, 0.3);
+    color: #f6d365;
+}
+
+.date-picker-btn:active {
+    transform: scale(0.95);
+}
+
+/* 随机滚动按钮 - 特殊样式 */
+.spin-btn {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: rgba(255, 215, 0, 0.2);
+    color: #f6d365;
+}
+
+.spin-btn:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+.spin-btn:active {
+    transform: scale(0.95);
+}
+
+.spin-btn.spinning {
+    background: rgba(255, 215, 0, 0.3);
+    border-color: #f6d365;
+    box-shadow: 0 0 30px rgba(246, 211, 101, 0.15);
+    animation: pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 20px rgba(246, 211, 101, 0.1); }
+    100% { box-shadow: 0 0 40px rgba(246, 211, 101, 0.25); }
+}
+
+.hint {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 12px;
+    margin-top: 8px;
+    min-height: 20px;
+    transition: color 0.3s;
+}
+
+.hint.active {
+    color: #f6d365;
+    font-weight: bold;
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    color: #1a1f35;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(246, 211, 101, 0.25);
+}
+
+.calculate-btn:active {
+    transform: scale(0.97);
+}
+
+.result {
+    margin-top: 30px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    display: none;
+    animation: fadeIn 0.5s ease;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result .birth-info {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.result .days {
+    text-align: center;
+    font-size: 56px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.result .label {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 16px;
+    margin-top: 2px;
+}
+
+.result .level {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #f6d365;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.result .level-extra {
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 6px;
+}
+
+.result.special {
+    border-color: rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.08);
+}
+
+.result .level.special {
+    color: #ffd700;
+    font-size: 28px;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+}
+
+.error {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.15);
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-top: 15px;
+    display: none;
+    text-align: center;
+    font-size: 14px;
+}
+
+.loading {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 15px;
+    display: none;
+    font-size: 14px;
+}
+
+.cloud-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, rgba(232, 244, 248, 0.2), rgba(184, 216, 232, 0.15));
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    cursor: pointer;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    z-index: 1000;
+    user-select: none;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+.cloud-btn:hover {
+    transform: scale(1.15) rotate(-5deg);
+    box-shadow: 0 8px 50px rgba(255, 215, 0, 0.15);
+    background: linear-gradient(135deg, rgba(232, 244, 248, 0.3), rgba(184, 216, 232, 0.25));
+    border-color: rgba(255, 215, 0, 0.2);
+}
+
+.cloud-btn:active {
+    transform: scale(0.9);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.cloud-btn {
+    animation: float 3s ease-in-out infinite;
+}
+
+.cloud-btn:hover {
+    animation: none;
+}
+
+.cloud-btn .tooltip {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: #f6d365;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 20px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.cloud-btn:hover .tooltip {
+    opacity: 1;
+    bottom: 85px;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 24px;
+    }
+
+    h1 {
+        font-size: 22px;
+        margin-top: 30px;
+    }
+
+    .back-btn {
+        top: 12px;
+        left: 12px;
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .date-input-wrapper {
+        flex-direction: column;
+    }
+
+    .date-input-wrapper input[type="text"] {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px 14px;
+        min-width: unset;
+    }
+
+    .date-picker-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .result .days {
+        font-size: 40px;
+    }
+
+    .cloud-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        font-size: 32px;
+    }
+}
